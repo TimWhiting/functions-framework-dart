@@ -8,7 +8,7 @@ environment:
   sdk: ^3.9.0
 
 dependencies:
-  analyzer: '>=14.1.0'
+  analyzer: '>=13.0.0'
   build: ^4.0.10
   build_config: ^1.3.2
   collection: ^1.19.1
