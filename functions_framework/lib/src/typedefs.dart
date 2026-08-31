@@ -14,7 +14,7 @@
 
 import 'dart:async';
 
-import 'package:google_cloud/google_cloud.dart';
+import 'package:google_cloud_logging/google_cloud_logging.dart';
 import 'package:shelf/shelf.dart';
 
 import 'cloud_event.dart';
@@ -25,8 +25,10 @@ typedef CloudEventHandler = FutureOr<void> Function(CloudEvent request);
 
 /// The shape of a handler for [CloudEvent] types while also providing a
 /// [RequestContext].
-typedef CloudEventWithContextHandler =
-    FutureOr<void> Function(CloudEvent request, RequestContext context);
+typedef CloudEventWithContextHandler = FutureOr<void> Function(
+  CloudEvent request,
+  RequestContext context,
+);
 
 /// The shape of a handler that supports a custom [RequestType] and
 /// [ResponseType].
@@ -55,5 +57,7 @@ typedef JsonWithContextHandler<RequestType, ResponseType> =
 /// The shape of a basic handler that follows the
 /// [package:shelf](https://pub.dev/packages/shelf) [Handler] pattern while also
 /// providing a [RequestLogger].
-typedef HandlerWithLogger =
-    FutureOr<Response> Function(Request request, RequestLogger logger);
+typedef HandlerWithLogger = FutureOr<Response> Function(
+  Request request,
+  StructuredLogger logger,
+);

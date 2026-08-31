@@ -15,8 +15,8 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:google_cloud/constants.dart' as cloud_constants;
-import 'package:google_cloud/google_cloud.dart';
+import 'package:google_cloud_shelf/google_cloud_shelf.dart';
+import 'package:google_cloud_shelf/src/bad_configuration_exception.dart';
 
 const defaultFunctionType = FunctionType.http;
 const defaultFunctionTarget = 'function';
@@ -36,7 +36,7 @@ class FunctionConfig {
   final String target;
 
   FunctionConfig({
-    this.port = cloud_constants.defaultListenPort,
+    this.port = defaultListenPort,
     this.functionType = defaultFunctionType,
     this.target = defaultFunctionTarget,
   });
@@ -100,7 +100,7 @@ Overrides the FUNCTION_SIGNATURE_TYPE environment variable.''',
         );
       }
     } else {
-      port = defaults?.port ?? cloud_constants.defaultListenPort;
+      port = defaults?.port ?? defaultListenPort;
     }
 
     final functionTypeOptionValue = options[_functionTypeOpt] as String?;

@@ -17,6 +17,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:functions_framework/functions_framework.dart';
+import 'package:google_cloud_logging/google_cloud_logging.dart';
+import 'package:google_cloud_shelf/google_cloud_shelf.dart';
 import 'package:shelf/shelf.dart';
 
 import 'src/pub_sub_types.dart';
@@ -77,7 +79,9 @@ Future<Response> function(Request request) async {
     }
 
     if (urlPath.startsWith('exception')) {
-      throw BadRequestException(400, 'Testing `throw BadRequestException`');
+      throw HttpResponseException.badRequest(
+        message: 'Testing `throw BadRequestException`',
+      );
     }
 
     if (urlPath.startsWith('error')) {
@@ -109,9 +113,9 @@ Future<Response> function(Request request) async {
 }
 
 @CloudFunction()
-Response loggingHandler(Request request, RequestLogger logger) {
+Response loggingHandler(Request request, StructuredLogger logger) {
   logger
-    ..log('default', LogSeverity.defaultSeverity)
+    ..log('default', LogSeverity.default$)
     ..debug('debug')
     ..info('info')
     ..notice('notice')

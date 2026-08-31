@@ -1,12 +1,12 @@
 name: ffd_workspace     # Can be anything
 environment:
-  sdk: ^3.9.0
+  sdk: ^3.13.0
 
 publish_to: none
 
 dev_dependencies:
-  dart_flutter_team_lints: ^3.2.0
-  melos: ^7.0.0
+  dart_flutter_team_lints: ^3.5.2
+  melos: ^8.6.0
 workspace:
   - examples/fullstack/backend
   - examples/fullstack/frontend-cli

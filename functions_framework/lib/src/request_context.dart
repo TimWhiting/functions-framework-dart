@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:google_cloud/google_cloud.dart';
+import 'package:google_cloud_logging/google_cloud_logging.dart';
 import 'package:meta/meta.dart';
 import 'package:shelf/shelf.dart';
 
@@ -24,7 +24,7 @@ import 'cloud_event.dart';
 /// Can be used as an optional second parameter in a function definition that
 /// accepts a [CloudEvent] or a custom type.
 class RequestContext {
-  final RequestLogger logger;
+  final StructuredLogger logger;
 
   /// Access to the source [Request] object.
   ///
@@ -34,7 +34,7 @@ class RequestContext {
 
   final responseHeaders = <String, /* String | List<String> */ Object>{};
 
-  RequestContext._(this.request) : logger = currentLogger;
+  RequestContext._(this.request) : logger = const StructuredLogger();
 }
 
 @internal

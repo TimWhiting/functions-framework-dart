@@ -15,22 +15,23 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:google_cloud/google_cloud.dart';
+import 'package:google_cloud_shelf/google_cloud_shelf.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:shelf/shelf.dart';
 
 MediaType mediaTypeFromRequest(Request request, {String? requiredMimeType}) {
   final contentType = request.headers[contentTypeHeader];
   if (contentType == null) {
-    throw BadRequestException(400, '$contentTypeHeader header is required.');
+    throw HttpResponseException.badRequest(
+      message: '$contentTypeHeader header is required.',
+    );
   }
   final MediaType value;
   try {
     value = MediaType.parse(contentType);
   } catch (e, stack) {
-    throw BadRequestException(
-      400,
-      'Could not parse $contentTypeHeader header.',
+    throw HttpResponseException.badRequest(
+      message: 'Could not parse $contentTypeHeader header.',
       innerError: e,
       innerStack: stack,
     );
@@ -39,10 +40,10 @@ MediaType mediaTypeFromRequest(Request request, {String? requiredMimeType}) {
   if (requiredMimeType != null) {
     if (value.mimeType != requiredMimeType) {
       // https://github.com/GoogleCloudPlatform/functions-framework#http-status-codes
-      throw BadRequestException(
-        400,
-        'Unsupported encoding "${value.mimeType.toString()}". '
-        'Only "$requiredMimeType" is supported.',
+      throw HttpResponseException.badRequest(
+        message:
+            'Unsupported encoding "${value.mimeType.toString()}". '
+            'Only "$requiredMimeType" is supported.',
       );
     }
   }
@@ -76,9 +77,8 @@ extension RequestExt on Request {
       return value;
     } on FormatException catch (e, stackTrace) {
       // https://github.com/GoogleCloudPlatform/functions-framework#http-status-codes
-      throw BadRequestException(
-        400,
-        'Could not parse the request body as JSON.',
+      throw HttpResponseException.badRequest(
+        message: 'Could not parse the request body as JSON.',
         innerError: e,
         innerStack: stackTrace,
       );
@@ -93,10 +93,10 @@ extension RequestExt on Request {
         final supportedTypes = SupportedContentTypes.values
             .map((e) => '"${e.value}"')
             .join(', ');
-        throw BadRequestException(
-          400,
-          'Unsupported encoding "$type". '
-          'Supported types: $supportedTypes',
+        throw HttpResponseException.badRequest(
+          message:
+              'Unsupported encoding "$type". '
+              'Supported types: $supportedTypes',
         );
       },
     );

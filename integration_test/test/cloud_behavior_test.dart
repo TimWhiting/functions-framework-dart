@@ -20,8 +20,8 @@ import 'dart:convert';
 
 import 'package:functions_framework/serve.dart';
 import 'package:functions_framework/src/run.dart';
-import 'package:google_cloud/constants.dart' as cloud_constants;
-import 'package:google_cloud/google_cloud.dart';
+import 'package:google_cloud_logging/google_cloud_logging.dart';
+import 'package:google_cloud_shelf/google_cloud_shelf.dart';
 import 'package:hello_world_function_test/functions.dart';
 import 'package:test/test.dart';
 
@@ -75,9 +75,7 @@ void main() {
     count++;
     traceStart = 'trace_start$count';
 
-    headers = {
-      cloud_constants.cloudTraceContextHeader: '$traceStart/trace_end',
-    };
+    headers = {cloudTraceContextHeader: '$traceStart/trace_end'};
   }
 
   tearDown(() async {
@@ -94,7 +92,7 @@ void main() {
     final map = jsonDecode(entry) as Map<String, dynamic>;
 
     expect(map, containsPair('message', message));
-    expect(map, containsPair('severity', severity.name));
+    expect(map, containsPair('severity', severity.value));
     expect(
       map,
       containsPair(

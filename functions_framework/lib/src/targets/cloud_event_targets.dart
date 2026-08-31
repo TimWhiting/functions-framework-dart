@@ -14,7 +14,7 @@
 
 import 'dart:async';
 
-import 'package:google_cloud/google_cloud.dart';
+import 'package:google_cloud_shelf/google_cloud_shelf.dart';
 import 'package:shelf/shelf.dart';
 
 import '../cloud_event.dart';
@@ -102,9 +102,8 @@ CloudEvent _decodeValidCloudEvent(
   try {
     return CloudEvent.fromJson(map);
   } catch (e, stackTrace) {
-    throw BadRequestException(
-      400,
-      'Could not decode the request as a $messageType.',
+    throw HttpResponseException.badRequest(
+      message: 'Could not decode the request as a $messageType.',
       innerError: e,
       innerStack: stackTrace,
     );

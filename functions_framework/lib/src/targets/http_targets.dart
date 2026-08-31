@@ -14,7 +14,7 @@
 
 import 'dart:async';
 
-import 'package:google_cloud/google_cloud.dart';
+import 'package:google_cloud_logging/google_cloud_logging.dart';
 import 'package:shelf/shelf.dart';
 
 import '../function_target.dart';
@@ -34,7 +34,7 @@ class HttpWithLoggerFunctionTarget extends FunctionTarget {
 
   @override
   FutureOr<Response> handler(Request request) =>
-      _function(request, currentLogger);
+      _function(request, const StructuredLogger());
 
   HttpWithLoggerFunctionTarget(this._function);
 }

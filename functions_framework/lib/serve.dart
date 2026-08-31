@@ -26,6 +26,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:google_cloud/google_cloud.dart';
+import 'package:google_cloud_shelf/google_cloud_shelf.dart';
+import 'package:google_cloud_shelf/src/bad_configuration_exception.dart';
 import 'package:io/ansi.dart';
 import 'package:io/io.dart';
 import 'package:shelf/shelf.dart';
@@ -34,7 +36,7 @@ import 'src/function_config.dart';
 import 'src/function_target.dart';
 import 'src/run.dart';
 
-export 'package:google_cloud/google_cloud.dart' show BadRequestException;
+export 'package:google_cloud/google_cloud.dart';
 export 'package:shelf/shelf.dart' show Handler;
 
 export 'src/function_target.dart'
